@@ -6,6 +6,9 @@ const app = express();
 const dbConfig = require('./config/database.config.js');
 const mongoose = require('mongoose');
 
+var usersRouter = require('./service/UserService');
+
+
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use(bodyParser.json())
@@ -17,6 +20,8 @@ app.get('/', (req, res) => {
 app.listen(3000, () => {
     console.log("Server is listening on port 3000");
 });
+
+app.use('/users', usersRouter);
 
 
 mongoose.Promise = global.Promise;
@@ -31,60 +36,3 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
-const User = require('./model/User')
-
-app.post('/signup', async (req,res) => {
-    let {name,email,password} = req.body 
-
-    try{
-        let user = new User({
-            name,
-            email,
-            password
-        })
-       let createdUser = await user.save() 
-       res.status(201).json({
-        status : 'Success',
-        data : {
-            createdUser
-        }
-    })
-    }catch(err){
-        console.log(err)
-    }
-})
-
-
-app.get('/get-user',  (req,res) =>{
-    User.find({}, (err,result)=>{
-        if(err){
-            res.send(err)
-        }
-        res.send(result)
-    })
-})
-
-
-app.patch('/update-user/:id', async (req,res) => {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id,req.body,{
-        new : true,
-        runValidators : true
-      })
-    try{
-        res.status(200).json({
-            status : 'Success',
-            data : {
-              updatedUser
-            }
-          })
-    }catch(err){
-        console.log(err)
-    }
-})
-
-
-app.delete('/delete-user/:id', async (req,res) => {
-    const id = req.params.id
-    await User.findByIdAndRemove(id).exec()
-    res.send('Deleted')
-})
