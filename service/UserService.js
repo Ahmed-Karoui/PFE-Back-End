@@ -1,15 +1,15 @@
 var express = require('express');
 var router = express.Router();
 const User = require('../model/user')
+var passport = require('passport');
 
 router.post('/signup', async (req,res) => {
-    let {name,email,password} = req.body 
-
     try{
         let user = new User({
-            name,
-            email,
-            password
+            name:req.body.name,
+            email:req.body.email,
+            password:User.hashPassword(req.body.email),
+            creation_dt:Date.now()
         })
        let createdUser = await user.save() 
        res.status(201).json({
@@ -57,5 +57,32 @@ router.delete('/delete-user/:id', async (req,res) => {
     await User.findByIdAndRemove(id).exec()
     res.send('Deleted')
 })
+
+
+router.post('/login',function(req,res,next){
+    passport.authenticate('local', function(err, user, info) {
+      if (err) { return res.status(501).json(err); }
+      if (!user) { return res.status(501).json(info); }
+      req.logIn(user, function(err) {
+        if (err) { return res.status(501).json(err); }
+        return res.status(200).json({message:'Login Success'});
+      });
+    })(req, res, next);
+  });
+  
+  router.get('/user',isValidUser,function(req,res,next){
+    return res.status(200).json(req.user);
+  });
+  
+  router.get('/logout',isValidUser, function(req,res,next){
+    req.logout();
+    return res.status(200).json({message:'Logout Success'});
+  })
+  
+  function isValidUser(req,res,next){
+    if(req.isAuthenticated()) next();
+    else return res.status(401).json({message:'Unauthorized Request'});
+  }
+  
 
 module.exports = router;
