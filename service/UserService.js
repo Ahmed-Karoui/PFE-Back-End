@@ -8,7 +8,7 @@ router.post('/signup', async (req,res) => {
         let user = new User({
             name:req.body.name,
             email:req.body.email,
-            password:User.hashPassword(req.body.email),
+            password:User.hashPassword(req.body.password),
             creation_dt:Date.now()
         })
        let createdUser = await user.save() 
@@ -83,6 +83,5 @@ router.post('/login',function(req,res,next){
     if(req.isAuthenticated()) next();
     else return res.status(401).json({message:'Unauthorized Request'});
   }
-  
 
 module.exports = router;

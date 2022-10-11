@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
     res.json({"message": "Hello Crud Node Express"});
 });
 
-app.listen(3000, () => {
+app.listen(3002, () => {
     console.log("Server is listening on port 3000");
 });
 
@@ -39,7 +39,6 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
-
 //passeport
 app.use(session({
     name:'myname.sid',
@@ -55,4 +54,3 @@ app.use(session({
 require('./passport-config');
 app.use(passport.initialize());
 app.use(passport.session());
-
