@@ -12,21 +12,20 @@ const TaskSchema = new mongoose.Schema({
     status : {
         type : String,
         required : true,
+        default : 'Active',
     },
     member : {
         type : String,
-        required : true,
     },
     project : {
         type : String,
-        required : true,
     },
     due_date : {
-        type : String,
+        type : Date,
         required : true,
     },
     creation_date : {
-        type : String,
+        type : Date,
         required : true,
     }
 })

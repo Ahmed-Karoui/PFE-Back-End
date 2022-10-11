@@ -1,20 +1,25 @@
 var express = require('express');
 var router = express.Router();
-const User = require('../model/project')
+const Project = require('../model/project')
+const User = require('../model/user')
 
 router.post('/add-project', async (req,res) => {
     try{
-        let user = new User({
-            name:req.body.name,
-            email:req.body.email,
-            password:User.hashPassword(req.body.password),
-            creation_dt:Date.now()
+        let user = new Project({
+            project_name:req.body.project_name,
+            description:req.body.description,
+            project_leader:req.body.project_leader,
+            members:req.body.members,
+            status:req.body.status,
+            Deadline:req.body.Deadline,
+            category:req.body.category,
+            creation_date:Date.now()
         })
-       let createdUser = await user.save() 
+       let createdProject = await user.save() 
        res.status(201).json({
         status : 'Success',
         data : {
-            createdUser
+            createdProject
         }
     })
     }catch(err){
@@ -23,18 +28,18 @@ router.post('/add-project', async (req,res) => {
 })
 
 
-router.get('/get-project',  (req,res) =>{
-    User.find({}, (err,result)=>{
+router.get('/get-projects',  (req,res) =>{
+     Project.find({}, (err,result)=>{
         if(err){
             res.send(err)
         }
-        res.send(result)
-    })
-})
+         res.send(result)
+     })
+ })
 
 
 router.patch('/update-project/:id', async (req,res) => {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id,req.body,{
+    const updatedProject = await Project.findByIdAndUpdate(req.params.id,req.body,{
         new : true,
         runValidators : true
       })
@@ -42,7 +47,7 @@ router.patch('/update-project/:id', async (req,res) => {
         res.status(200).json({
             status : 'Success',
             data : {
-              updatedUser
+                updatedProject
             }
           })
     }catch(err){
@@ -53,7 +58,7 @@ router.patch('/update-project/:id', async (req,res) => {
 
 router.delete('/delete-project/:id', async (req,res) => {
     const id = req.params.id
-    await User.findByIdAndRemove(id).exec()
+    await Project.findByIdAndRemove(id).exec()
     res.send('Deleted')
 })
 

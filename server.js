@@ -8,7 +8,13 @@ const app = express();
 const dbConfig = require('./config/database.config.js');
 const mongoose = require('mongoose');
 
+// Attaching Routing To Service Classes
 var usersRouter = require('./service/UserService');
+var projectsRouter = require('./service/ProjectService');
+var tasksRouter = require('./service/TaskService');
+
+
+
 const { request } = require('express');
 app.use(cors({
     origin:['http://localhost:4200','http://127.0.0.1:4200'],
@@ -21,11 +27,13 @@ app.get('/', (req, res) => {
     res.json({"message": "Hello Crud Node Express"});
 });
 
-app.listen(3002, () => {
+app.listen(3000, () => {
     console.log("Server is listening on port 3000");
 });
 
 app.use('/users', usersRouter);
+app.use('/projects', projectsRouter);
+app.use('/tasks', tasksRouter);
 
 mongoose.Promise = global.Promise;
 

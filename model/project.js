@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const ProjectSchema = new mongoose.Schema({
-    name : {
+    project_name : {
         type : String,
         required : true
     },
@@ -11,27 +11,27 @@ const ProjectSchema = new mongoose.Schema({
     },
     project_leader : {
         type : String,
-        required : true,
     },
     members : {
         type : String,
-        required : true,
     },
     status : {
         type : String,
         required : true,
+        default : 'Active',
     },
     category : {
         type : String,
         required : true,
     },
     Deadline : {
-        type : String,
+        type : Date,
         required : true,
     },
     creation_date : {
-        type : String,
-        required : true,
+        type : Date,
+        required : true
+        
     }
 })
 

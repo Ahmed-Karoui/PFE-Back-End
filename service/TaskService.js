@@ -4,17 +4,20 @@ const Task = require('../model/task')
 
 router.post('/add-task', async (req,res) => {
     try{
-        let user = new User({
+        let user = new Task({
             name:req.body.name,
-            email:req.body.email,
-            password:User.hashPassword(req.body.password),
-            creation_dt:Date.now()
+            description:req.body.description,
+            status:req.body.status,
+            member:req.body.member,
+            due_date:req.body.due_date,
+            creation_date:Date.now(),
+
         })
-       let createdUser = await user.save() 
+       let createdTask = await user.save() 
        res.status(201).json({
         status : 'Success',
         data : {
-            createdUser
+            createdTask
         }
     })
     }catch(err){
@@ -24,7 +27,7 @@ router.post('/add-task', async (req,res) => {
 
 
 router.get('/get-tasks',  (req,res) =>{
-    User.find({}, (err,result)=>{
+    Task.find({}, (err,result)=>{
         if(err){
             res.send(err)
         }
@@ -34,7 +37,7 @@ router.get('/get-tasks',  (req,res) =>{
 
 
 router.patch('/update-task/:id', async (req,res) => {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id,req.body,{
+    const updatedTask = await Task.findByIdAndUpdate(req.params.id,req.body,{
         new : true,
         runValidators : true
       })
@@ -42,7 +45,7 @@ router.patch('/update-task/:id', async (req,res) => {
         res.status(200).json({
             status : 'Success',
             data : {
-              updatedUser
+                updatedTask
             }
           })
     }catch(err){
@@ -53,7 +56,7 @@ router.patch('/update-task/:id', async (req,res) => {
 
 router.delete('/delete-task/:id', async (req,res) => {
     const id = req.params.id
-    await User.findByIdAndRemove(id).exec()
+    await Task.findByIdAndRemove(id).exec()
     res.send('Deleted')
 })
 

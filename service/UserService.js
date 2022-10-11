@@ -9,7 +9,7 @@ router.post('/signup', async (req,res) => {
             name:req.body.name,
             email:req.body.email,
             password:User.hashPassword(req.body.password),
-            creation_dt:Date.now()
+            creation_date:Date.now()
         })
        let createdUser = await user.save() 
        res.status(201).json({
