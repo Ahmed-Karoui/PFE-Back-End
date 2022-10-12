@@ -4,17 +4,17 @@ const Appraisal = require('../model/appraisal')
 
 router.post('/add-appraisal', async (req,res) => {
     try{
-        let user = new User({
-            name:req.body.name,
-            email:req.body.email,
-            password:User.hashPassword(req.body.password),
-            creation_dt:Date.now()
+        let user = new Appraisal({
+            previous_date:req.body.previous_date,
+            Next_date:req.body.Next_date,
+            Objectives:req.body.Objectives,
+            raise:req.body.raise,
         })
-       let createdUser = await user.save() 
+       let createdAppraisal = await user.save() 
        res.status(201).json({
         status : 'Success',
         data : {
-            createdUser
+            createdAppraisal
         }
     })
     }catch(err){
@@ -24,7 +24,7 @@ router.post('/add-appraisal', async (req,res) => {
 
 
 router.get('/get-appraisals',  (req,res) =>{
-    User.find({}, (err,result)=>{
+    Appraisal.find({}, (err,result)=>{
         if(err){
             res.send(err)
         }
@@ -34,7 +34,7 @@ router.get('/get-appraisals',  (req,res) =>{
 
 
 router.patch('/update-appraisal/:id', async (req,res) => {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id,req.body,{
+    const updatedAppraisal = await Appraisal.findByIdAndUpdate(req.params.id,req.body,{
         new : true,
         runValidators : true
       })
@@ -42,7 +42,7 @@ router.patch('/update-appraisal/:id', async (req,res) => {
         res.status(200).json({
             status : 'Success',
             data : {
-              updatedUser
+                updatedAppraisal
             }
           })
     }catch(err){
@@ -53,7 +53,7 @@ router.patch('/update-appraisal/:id', async (req,res) => {
 
 router.delete('/delete-appraisal/:id', async (req,res) => {
     const id = req.params.id
-    await User.findByIdAndRemove(id).exec()
+    await Appraisal.findByIdAndRemove(id).exec()
     res.send('Deleted')
 })
 

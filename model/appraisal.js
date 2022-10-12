@@ -2,11 +2,11 @@ const mongoose = require('mongoose')
 
 const AppraisalgSchema = new mongoose.Schema({
     previous_date : {
-        type : String,
+        type : Date,
         required : true
     },
     Next_date : {
-        type : String,
+        type : Date,
         required : true
     },
     Objectives : {

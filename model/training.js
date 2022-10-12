@@ -20,6 +20,10 @@ const TrainingSchema = new mongoose.Schema({
     status : {
         type : String,
         required : true,
+    },
+    training_date : {
+        type : String,
+        required : true,
     }
 })
 

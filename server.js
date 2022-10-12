@@ -12,7 +12,10 @@ const mongoose = require('mongoose');
 var usersRouter = require('./service/UserService');
 var projectsRouter = require('./service/ProjectService');
 var tasksRouter = require('./service/TaskService');
-
+var appraisalsRouter = require('./service/AppraisalService');
+var leavesRouter = require('./service/LeaveService');
+var ticketsRouter = require('./service/TicketService');
+var trainingsRouter = require('./service/TrainingService')
 
 
 const { request } = require('express');
@@ -31,9 +34,17 @@ app.listen(3000, () => {
     console.log("Server is listening on port 3000");
 });
 
+//Routing implementation
 app.use('/users', usersRouter);
 app.use('/projects', projectsRouter);
 app.use('/tasks', tasksRouter);
+app.use('/appraisals', appraisalsRouter);
+app.use('/leaves', leavesRouter);
+app.use('/trainings', trainingsRouter);
+app.use('/tickets', ticketsRouter);
+
+
+
 
 mongoose.Promise = global.Promise;
 

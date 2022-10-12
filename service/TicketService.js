@@ -4,17 +4,20 @@ const Ticket = require('../model/ticket')
 
 router.post('/add-ticket', async (req,res) => {
     try{
-        let user = new User({
-            name:req.body.name,
-            email:req.body.email,
-            password:User.hashPassword(req.body.password),
-            creation_dt:Date.now()
+        let ticket = new Ticket({
+            description:req.body.description,
+            category:req.body.category,
+            urgency:req.body.urgency,
+            departement:req.body.departement,
+            creation_date:Date.now(),
+            estiamte_date:req.body.estiamte_date,
+            user:req.body.user,
         })
-       let createdUser = await user.save() 
+       let createdTicket = await ticket.save() 
        res.status(201).json({
         status : 'Success',
         data : {
-            createdUser
+            createdTicket
         }
     })
     }catch(err){
@@ -24,7 +27,7 @@ router.post('/add-ticket', async (req,res) => {
 
 
 router.get('/get-tickets',  (req,res) =>{
-    User.find({}, (err,result)=>{
+    Ticket.find({}, (err,result)=>{
         if(err){
             res.send(err)
         }
@@ -34,7 +37,7 @@ router.get('/get-tickets',  (req,res) =>{
 
 
 router.patch('/update-ticket/:id', async (req,res) => {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id,req.body,{
+    const updatedTicket = await Ticket.findByIdAndUpdate(req.params.id,req.body,{
         new : true,
         runValidators : true
       })
@@ -42,7 +45,7 @@ router.patch('/update-ticket/:id', async (req,res) => {
         res.status(200).json({
             status : 'Success',
             data : {
-              updatedUser
+                updatedTicket
             }
           })
     }catch(err){
@@ -53,7 +56,7 @@ router.patch('/update-ticket/:id', async (req,res) => {
 
 router.delete('/delete-ticket/:id', async (req,res) => {
     const id = req.params.id
-    await User.findByIdAndRemove(id).exec()
+    await Ticket.findByIdAndRemove(id).exec()
     res.send('Deleted')
 })
 

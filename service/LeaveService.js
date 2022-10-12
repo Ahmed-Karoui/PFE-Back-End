@@ -4,17 +4,17 @@ const Leave = require('../model/leave')
 
 router.post('/add-leave', async (req,res) => {
     try{
-        let user = new User({
-            name:req.body.name,
-            email:req.body.email,
-            password:User.hashPassword(req.body.password),
-            creation_dt:Date.now()
+        let leave = new Leave({
+            description:req.body.description,
+            start_date:req.body.start_date,
+            end_date:req.body.end_date,
+            user:req.body.user,
         })
-       let createdUser = await user.save() 
+       let createdLeave = await leave.save() 
        res.status(201).json({
         status : 'Success',
         data : {
-            createdUser
+            createdLeave
         }
     })
     }catch(err){
@@ -24,7 +24,7 @@ router.post('/add-leave', async (req,res) => {
 
 
 router.get('/get-leaves',  (req,res) =>{
-    User.find({}, (err,result)=>{
+    Leave.find({}, (err,result)=>{
         if(err){
             res.send(err)
         }
@@ -34,7 +34,7 @@ router.get('/get-leaves',  (req,res) =>{
 
 
 router.patch('/update-leave/:id', async (req,res) => {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id,req.body,{
+    const updatedLeave = await Leave.findByIdAndUpdate(req.params.id,req.body,{
         new : true,
         runValidators : true
       })
@@ -42,7 +42,7 @@ router.patch('/update-leave/:id', async (req,res) => {
         res.status(200).json({
             status : 'Success',
             data : {
-              updatedUser
+                updatedLeave
             }
           })
     }catch(err){
@@ -53,7 +53,7 @@ router.patch('/update-leave/:id', async (req,res) => {
 
 router.delete('/delete-leave/:id', async (req,res) => {
     const id = req.params.id
-    await User.findByIdAndRemove(id).exec()
+    await Leave.findByIdAndRemove(id).exec()
     res.send('Deleted')
 })
 

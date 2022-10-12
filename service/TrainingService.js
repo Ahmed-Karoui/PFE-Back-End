@@ -4,17 +4,20 @@ const Training = require('../model/training')
 
 router.post('/add-training', async (req,res) => {
     try{
-        let user = new User({
+        let training = new Training({
             name:req.body.name,
-            email:req.body.email,
-            password:User.hashPassword(req.body.password),
-            creation_dt:Date.now()
+            description:req.body.description,
+            category:req.body.category,
+            member:req.body.member,
+            status:req.body.status,
+            training_date:req.body.training_date,
+
         })
-       let createdUser = await user.save() 
+       let createdTraining = await training.save() 
        res.status(201).json({
         status : 'Success',
         data : {
-            createdUser
+            createdTraining
         }
     })
     }catch(err){
@@ -24,7 +27,7 @@ router.post('/add-training', async (req,res) => {
 
 
 router.get('/get-trainings',  (req,res) =>{
-    User.find({}, (err,result)=>{
+    Training.find({}, (err,result)=>{
         if(err){
             res.send(err)
         }
@@ -34,7 +37,7 @@ router.get('/get-trainings',  (req,res) =>{
 
 
 router.patch('/update-training/:id', async (req,res) => {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id,req.body,{
+    const updatedTraining = await Training.findByIdAndUpdate(req.params.id,req.body,{
         new : true,
         runValidators : true
       })
@@ -42,7 +45,7 @@ router.patch('/update-training/:id', async (req,res) => {
         res.status(200).json({
             status : 'Success',
             data : {
-              updatedUser
+                updatedTraining
             }
           })
     }catch(err){
@@ -53,7 +56,7 @@ router.patch('/update-training/:id', async (req,res) => {
 
 router.delete('/delete-training/:id', async (req,res) => {
     const id = req.params.id
-    await User.findByIdAndRemove(id).exec()
+    await Training.findByIdAndRemove(id).exec()
     res.send('Deleted')
 })
 
