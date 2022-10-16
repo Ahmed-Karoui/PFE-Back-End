@@ -7,7 +7,6 @@ const ProjectSchema = new mongoose.Schema({
     },
     description : {
         type : String,
-        required : true
     },
     project_leader : {
         type : String,
@@ -22,11 +21,9 @@ const ProjectSchema = new mongoose.Schema({
     },
     category : {
         type : String,
-        required : true,
     },
     Deadline : {
         type : Date,
-        required : true,
     },
     creation_date : {
         type : Date,
