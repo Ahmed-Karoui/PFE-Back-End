@@ -25,6 +25,14 @@ const TicketSchema = new mongoose.Schema({
         type : String,
         required : true,
     },
+    status : {
+        type : String,
+        required : true,
+    },
+    content : {
+        type : String,
+        required : true,
+    },
     user : {
         type : String,
         required : true,

@@ -12,7 +12,8 @@ router.post('/add-ticket', async (req,res) => {
             creation_date:Date.now(),
             estiamte_date:req.body.estiamte_date,
             user:req.body.user,
-        })
+            status:req.body.status,
+            content:req.body.content,        })
        let createdTicket = await ticket.save() 
        res.status(201).json({
         status : 'Success',
