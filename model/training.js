@@ -13,9 +13,8 @@ const TrainingSchema = new mongoose.Schema({
         type : String,
         required : true,
     },
-    member : {
-        type : String,
-        required : true,
+    members : {
+        type : Array,
     },
     status : {
         type : String,
