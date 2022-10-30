@@ -15,6 +15,9 @@ const LeaveSchema = new mongoose.Schema({
     },
     user : {
         type : String,
+    },
+    status : {
+        type : String,
         required : true,
     }
 })

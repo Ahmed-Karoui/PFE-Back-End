@@ -5,15 +5,39 @@ const userSchema = new mongoose.Schema({
     name : {
         type : String,
     },
+    last_name : {
+        type : String,
+    },
     email : {
         type : String,
         required : true
+    },
+    Birth_date : {
+        type : Date,
+    },
+    Hire_date : {
+        type : Date,
+    },
+    role : {
+        type : String,
+    },
+    gender : {
+        type : String,
+    },
+    manager : {
+        type : String,
+    },
+    phone : {
+        type : String,
+    },
+    status : {
+        type : String,
     },
     password : {
         type : String,
         required : true,
     },
-    creation_dt:{type:Date, require:true}
+    creation_date:{type:Date, require:true}
 
     
 })

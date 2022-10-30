@@ -7,7 +7,15 @@ router.post('/signup', async (req,res) => {
     try{
         let user = new User({
             name:req.body.name,
+            last_name:req.body.last_name,
             email:req.body.email,
+            Birth_date:req.body.Birth_date,
+            Hire_date:req.body.Hire_date,
+            role:req.body.role,
+            gender:req.body.gender,
+            manager:req.body.manager,
+            phone:req.body.phone,
+            status:req.body.status,
             password:User.hashPassword(req.body.password),
             creation_date:Date.now()
         })
