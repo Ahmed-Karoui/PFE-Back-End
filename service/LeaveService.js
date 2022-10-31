@@ -9,6 +9,7 @@ router.post('/add-leave', async (req,res) => {
             start_date:req.body.start_date,
             end_date:req.body.end_date,
             user:req.body.user,
+            status:req.body.status,
         })
        let createdLeave = await leave.save() 
        res.status(201).json({

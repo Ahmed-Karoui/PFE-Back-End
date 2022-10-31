@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const LeaveSchema = new mongoose.Schema({
-    description : {
+    title : {
         type : String,
         required : true
     },
