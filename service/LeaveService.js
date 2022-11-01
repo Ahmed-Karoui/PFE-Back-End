@@ -5,7 +5,7 @@ const Leave = require('../model/leave')
 router.post('/add-leave', async (req,res) => {
     try{
         let leave = new Leave({
-            description:req.body.description,
+            title:req.body.title,
             start_date:req.body.start_date,
             end_date:req.body.end_date,
             user:req.body.user,

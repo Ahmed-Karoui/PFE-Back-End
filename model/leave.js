@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const LeaveSchema = new mongoose.Schema({
     title : {
         type : String,
-        required : true
     },
     start_date : {
         type : Date,
@@ -18,7 +17,6 @@ const LeaveSchema = new mongoose.Schema({
     },
     status : {
         type : String,
-        required : true,
     }
 })
 
