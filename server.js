@@ -58,17 +58,17 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
-//passeport
+//passport
 app.use(session({
-    name:'myname.sid',
-    resave:false,
-    saveUninitialized:false,
-    secret:'bouhmid',
-    cookie:{
-        maxAge:72000000,
-        httpOnly:false,
-        secure:false
-    }
+  name:'myname.sid',
+  resave:false,
+  saveUninitialized:false,
+  secret:'secret',
+  cookie:{
+    maxAge:36000000,
+    httpOnly:false,
+    secure:false
+  },
 }));
 require('./passport-config');
 app.use(passport.initialize());
