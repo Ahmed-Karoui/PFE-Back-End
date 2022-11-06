@@ -4,6 +4,10 @@ var cors = require('cors');
 var passport = require('passport');
 var session = require('express-session');
 const app = express();
+var path = require('path');
+var cookieParser = require('cookie-parser');
+
+
 
 const dbConfig = require('./config/database.config.js');
 const mongoose = require('mongoose');
@@ -59,17 +63,35 @@ mongoose.connect(dbConfig.url, {
 });
 
 //passport
+var passport = require('passport');
+var session = require('express-session');
+const MongoStore = require('connect-mongo');
 app.use(session({
-  name:'myname.sid',
-  resave:false,
-  saveUninitialized:false,
-  secret:'secret',
-  cookie:{
-    maxAge:36000000,
-    httpOnly:false,
-    secure:false
-  },
-}));
+    secret: 'story book',
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: 'mongodb://localhost:27017/PFE' })
+}))
+
 require('./passport-config');
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+      done(err, user);
+  });
+});
+
+
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
