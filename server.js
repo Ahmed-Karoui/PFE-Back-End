@@ -62,17 +62,22 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
-//passport
-var passport = require('passport');
-var session = require('express-session');
-const MongoStore = require('connect-mongo');
-app.use(session({
-    secret: 'story book',
-    resave: false,
-    saveUninitialized: false,
-    store: MongoStore.create({ mongoUrl: 'mongodb://localhost:27017/PFE' })
-}))
-
+// // //passport
+// // var passport = require('passport');
+// // var session = require('express-session');
+// // const MongoStore = require('connect-mongo')(session);
+// app.use(session({
+//   name:'myname.sid',
+//   resave:false,
+//   saveUninitialized:false,
+//   secret:'secret',
+//   cookie:{
+//     maxAge:36000000,
+//     httpOnly:false,
+//     secure:false
+//   },
+//   store: new MongoStore({ mongooseConnection: mongoose.connection })
+// }));
 require('./passport-config');
 app.use(passport.initialize());
 app.use(passport.session());
