@@ -10,10 +10,13 @@ const AppraisalgSchema = new mongoose.Schema({
         required : true
     },
     Objectives : {
+        type : Array,
+    },
+    raise : {
         type : String,
         required : true,
     },
-    raise : {
+    attachement : {
         type : String,
         required : true,
     }
