@@ -63,14 +63,14 @@ router.delete('/delete-task/:id', async (req,res) => {
 })
 
 
-router.get('/get-tasks-by-project/:Project/projects',  (req,res) =>{
-    let projectsfound  = Task.find({project:req.params.Project}).populate('projects').execPopulate;
-    console.log(projectsfound)
-    // res.json(projectsfound)
-    });
+// router.get('/get-tasks-by-project/:Project/projects',  (req,res) =>{
+//     let projectsfound  = Task.find({project:req.params.Project}).populate('projects').execPopulate;
+//     console.log(projectsfound)
+//     // res.json(projectsfound)
+//     });
 
 
-    router.get('/get-tasks-by-project2/:Project', function(req, res) {
+    router.get('/get-tasks-by-project/:Project', function(req, res) {
         Task.find({project:req.params.Project}).populate().exec(function(err, av) {
           if (err)
             res.send(err);
