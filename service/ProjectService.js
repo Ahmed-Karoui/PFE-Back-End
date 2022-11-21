@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const Project = require('../model/project')
 const User = require('../model/user')
+const task = require('../model/task')
+
 
 router.post('/add-project', async (req,res) => {
     try{
@@ -61,6 +63,13 @@ router.delete('/delete-project/:id', async (req,res) => {
     await Project.findByIdAndRemove(id).exec()
     res.send('Deleted')
 })
+
+
+router.get('/get-tasks-by-project/:Project',  (req,res) =>{
+    let projectsfound  = Project.find({project:req.params.Project}).populate('tasks');
+    console.log(projectsfound)
+    });
+
 
 
 module.exports = router;

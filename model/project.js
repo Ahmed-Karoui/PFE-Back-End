@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const Schema = mongoose.Schema;
+const taks = require('../model/task')
 
 const ProjectSchema = new mongoose.Schema({
     project_name : {
@@ -29,7 +31,11 @@ const ProjectSchema = new mongoose.Schema({
         type : Date,
         required : true
         
-    }
+    },
+    tasks:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"task"
+    }]
 })
 
 const Project = mongoose.model('Project',ProjectSchema)

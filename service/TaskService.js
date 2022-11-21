@@ -1,19 +1,21 @@
 var express = require('express');
 var router = express.Router();
-const Task = require('../model/task')
+const Task = require('../model/task');
+const Project = require ('../model/project');
 
 router.post('/add-task', async (req,res) => {
     try{
-        let user = new Task({
+        let task = new Task({
             name:req.body.name,
             description:req.body.description,
             status:req.body.status,
             member:req.body.member,
             due_date:req.body.due_date,
             creation_date:Date.now(),
+            project:req.body.project,
 
         })
-       let createdTask = await user.save() 
+       let createdTask = await task.save() 
        res.status(201).json({
         status : 'Success',
         data : {
@@ -59,6 +61,23 @@ router.delete('/delete-task/:id', async (req,res) => {
     await Task.findByIdAndRemove(id).exec()
     res.send('Deleted')
 })
+
+
+router.get('/get-tasks-by-project/:Project/projects',  (req,res) =>{
+    let projectsfound  = Task.find({project:req.params.Project}).populate('projects').execPopulate;
+    console.log(projectsfound)
+    // res.json(projectsfound)
+    });
+
+
+    router.get('/get-tasks-by-project2/:Project', function(req, res) {
+        Task.find({project:req.params.Project}).populate().exec(function(err, av) {
+          if (err)
+            res.send(err);
+    
+          res.json(av);
+        });
+      });
 
 
 module.exports = router;

@@ -7,8 +7,6 @@ const app = express();
 var path = require('path');
 var cookieParser = require('cookie-parser');
 
-
-
 const dbConfig = require('./config/database.config.js');
 const mongoose = require('mongoose');
 
@@ -78,20 +76,20 @@ mongoose.connect(dbConfig.url, {
 //   },
 //   store: new MongoStore({ mongooseConnection: mongoose.connection })
 // }));
-require('./passport-config');
-app.use(passport.initialize());
-app.use(passport.session());
+// require('./passport-config');
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
+// passport.serializeUser(function(user, done) {
+//   done(null, user.id);
+// });
 
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
-      done(err, user);
-  });
-});
+// passport.deserializeUser(function(id, done) {
+//   User.findById(id, function(err, user) {
+//       done(err, user);
+//   });
+// });
 
 
 

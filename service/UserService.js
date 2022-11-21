@@ -41,6 +41,15 @@ router.get('/get-user',  (req,res) =>{
     })
 })
 
+router.get('/get-managers',  (req,res) =>{
+  User.find({role:"Manager"}, (err,result)=>{
+      if(err){
+          res.send(err)
+      }
+      res.send(result)
+  })
+})
+
 
 router.patch('/update-user/:id', async (req,res) => {
     const updatedUser = await User.findByIdAndUpdate(req.params.id,req.body,{

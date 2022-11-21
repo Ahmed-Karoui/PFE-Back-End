@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const Project = require('../model/project')
+
 
 const TaskSchema = new mongoose.Schema({
     name : {
@@ -22,11 +24,14 @@ const TaskSchema = new mongoose.Schema({
     },
     due_date : {
         type : Date,
-        required : true,
     },
     creation_date : {
         type : Date,
         required : true,
+    },
+    project:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"project"
     }
 })
 
