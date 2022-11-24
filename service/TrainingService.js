@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const Training = require('../model/training')
+const User = require('../model/user')
 
 router.post('/add-training', async (req,res) => {
     try{
@@ -8,12 +9,14 @@ router.post('/add-training', async (req,res) => {
             name:req.body.name,
             description:req.body.description,
             category:req.body.category,
-            member:req.body.member,
             status:req.body.status,
             training_date:req.body.training_date,
+            users:req.body.users
+
 
         })
        let createdTraining = await training.save() 
+       await User.updateMany({ '_id': training.users }, { $push: { users: training._id } });
        res.status(201).json({
         status : 'Success',
         data : {
@@ -59,6 +62,26 @@ router.delete('/delete-training/:id', async (req,res) => {
     await Training.findByIdAndRemove(id).exec()
     res.send('Deleted')
 })
+
+
+// router.get('/get-trainings-by-user/', async (req,res) => {
+//     let foundusers =
+//     Training.find().populate('users').exec();
+//     return foundusers;
+//   })
+
+
+  router.get('/get-trainings-by-user/:id', async (req,res) => {
+    const encryptedusersfound = await Training.findById(req.params.id).select('users');
+    const records = await User.find().where('_id').in(encryptedusersfound.users).exec();
+    res.send(records);
+  })
+
+
+ 
+
+
+  
 
 
 module.exports = router;

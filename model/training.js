@@ -13,9 +13,6 @@ const TrainingSchema = new mongoose.Schema({
         type : String,
         required : true,
     },
-    members : {
-        type : Array,
-    },
     status : {
         type : String,
         required : true,
@@ -23,7 +20,9 @@ const TrainingSchema = new mongoose.Schema({
     training_date : {
         type : String,
         required : true,
-    }
+    },
+    users: [{ type: mongoose.Types.ObjectId, ref: 'user' }],
+
 })
 
 const Training = mongoose.model('Training',TrainingSchema)

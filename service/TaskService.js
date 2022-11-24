@@ -80,4 +80,46 @@ router.delete('/delete-task/:id', async (req,res) => {
       });
 
 
+      router.get('/task/:id', (req, res, next) => {
+        Task.findOne({
+          _id: req.params.id
+        }).then(
+          (thing) => {
+            res.status(200).json(thing);
+          }
+        ).catch(
+          (error) => {
+            res.status(404).json({
+              error: error
+            });
+          }
+        );
+      });
+
+
+    //   router.put('/task-validate/:id/:status', (req, res, next) => {
+    //     Task.findByIdAndUpdate({"5db6b26730f133b65dbbe459"},{"breed": "Great Dane"}, function(err, result){
+    //         if(err){
+    //             res.send(err)
+    //         }
+    //         else{
+    //             res.send(result)
+    //         }
+    
+
+    router.route('/task-validate/:id').post(function(req,res){
+
+        Task.findByIdAndUpdate({_id:req.params.id},{"status": "Completed"}, function(err, result){
+    
+            if(err){
+                res.send(err)
+            }
+            else{
+                res.send(result)
+            }
+    
+        })
+    })
+
+
 module.exports = router;
